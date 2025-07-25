@@ -1,5 +1,7 @@
+import { authTokenKey } from "@/@apis/auth/constants";
 import { IBaseResponse } from "@/base/interfaces";
 import { ENV } from "@/environments";
+import { cookies } from "@/lib/cookies";
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -13,7 +15,9 @@ export const AxiosInstance = axios.create({
 AxiosInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     config.baseURL = ENV.apiUrl;
-    // config.headers["Authorization"] = `Bearer ${await authRefreshToken()}`;
+    const token = cookies.getData(authTokenKey);
+    config.headers["Authorization"] =
+      `Bearer ${await cookies.getData(authTokenKey)}`;
     return config;
   },
   (error: AxiosError) => {
@@ -29,10 +33,6 @@ AxiosInstance.interceptors.response.use(
       if (typeof window === "undefined") return error.response;
       return error.response;
     } else if (error.response?.data?.success === false) {
-      console.log(
-        "🚀😬 ~ error.response?.data?.success === false:",
-        error.response?.data?.success === false,
-      );
       error.response?.data?.errorMessages?.map((x: string) => {
         return toast.error(x);
       });

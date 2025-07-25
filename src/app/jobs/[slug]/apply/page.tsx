@@ -1,6 +1,7 @@
 "use client";
 
 import { useCreateApplication } from "@/@apis/applications/hooks";
+import { IApplicationCreate } from "@/@apis/applications/interface";
 import LoadingButton from "@/components/LoadingButton";
 import {
   Form,
@@ -84,7 +85,7 @@ export default function ApplyForm({ params }: { params: { slug: string } }) {
   async function onSubmit(values: ApplyValues) {
     console.log("🚀😬 ~ onSubmit ~ values:", values);
     // Submit application logic here
-    await createApplication.mutate(values);
+    createApplication.mutate(values as IApplicationCreate);
     router.push(`/jobs/${params?.slug}/apply-submitted`);
   }
 

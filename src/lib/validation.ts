@@ -1,5 +1,24 @@
 import { z } from "zod";
-import { jobTypes, locationTypes } from "./job-types";
+import { JobType, LocationType, locationTypes } from "./job-types";
+
+export const createJobSchema = z.object({
+  title: z.string().min(1),
+  position: z.string().min(1),
+  description: z.string().min(1),
+  location: z.string().min(1),
+  salary: z.coerce.number().min(0), // changed to number
+  companyName: z.string().min(1),
+  applicationDeadline: z.string().min(1),
+  vacancies: z.coerce.number().min(0), // changed to number
+  age: z.string().min(1), // changed to string
+  experience: z.string().min(1),
+  requirements: z.string().min(1),
+  jobType: z.nativeEnum(JobType),
+  locationType: z.nativeEnum(LocationType),
+  companyLogo: z.any().optional(),
+});
+
+export type CreateJobValues = z.infer<typeof createJobSchema>;
 
 const requiredString = z.string().min(1, "Required");
 const numericRequiredString = requiredString.regex(/^\d+$/, "Must be a number");
@@ -27,7 +46,7 @@ const applicationSchema = z
 const locationSchema = z
   .object({
     locationType: requiredString.refine(
-      (value) => locationTypes.includes(value),
+      (value) => locationTypes.includes(value as LocationType),
       "Invalid location type",
     ),
     location: z.string().max(100).optional(),
@@ -40,26 +59,6 @@ const locationSchema = z
       path: ["location"],
     },
   );
-
-export const createJobSchema = z
-  .object({
-    title: requiredString.max(100),
-    type: requiredString.refine(
-      (value) => jobTypes.includes(value),
-      "Invalid job type",
-    ),
-    companyName: requiredString.max(100),
-    companyLogo: companyLogoSchema,
-    description: z.string().max(5000).optional(),
-    salary: numericRequiredString.max(
-      9,
-      "Number can't be longer than 9 digits",
-    ),
-  })
-  .and(applicationSchema)
-  .and(locationSchema);
-
-export type CreateJobValues = z.infer<typeof createJobSchema>;
 
 export const jobFilterSchema = z.object({
   q: z.string().optional(),

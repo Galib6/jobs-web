@@ -1,4 +1,4 @@
-const placeholderJobs = [
+export const placeholderJobs = [
   {
     title: "Full-Stack Developer at Stripe",
     type: "Full-time",
@@ -345,7 +345,3 @@ This is a fantastic opportunity for those looking to kickstart their career in w
 `,
   },
 ];
-
-module.exports = {
-  placeholderJobs,
-};

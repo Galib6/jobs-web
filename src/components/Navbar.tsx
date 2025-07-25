@@ -1,9 +1,14 @@
+"use client";
+
 import logo from "@/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <header className="shadow-sm">
       <nav className="m-auto flex max-w-5xl items-center justify-between px-3 py-5">
@@ -11,9 +16,11 @@ export default function Navbar() {
           <Image src={logo} width={40} height={40} alt="Job Portal logo" />
           <span className="text-xl font-bold tracking-tight">Job Portal</span>
         </Link>
-        <Button asChild>
-          <Link href="/jobs/new">Admin Login</Link>
-        </Button>
+        {!(pathname && pathname.includes("/admin")) && (
+          <Button asChild>
+            <Link href="/admin">Admin Panel</Link>
+          </Button>
+        )}
       </nav>
     </header>
   );

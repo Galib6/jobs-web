@@ -1,7 +1,7 @@
 "use client";
 
+import { useCreateJob } from "@/@apis/jobs/hooks";
 import LoadingButton from "@/components/LoadingButton";
-import LocationInput from "@/components/LocationInput";
 import RichTextEditor from "@/components/RichTextEditor";
 import {
   Form,
@@ -18,10 +18,10 @@ import Select from "@/components/ui/select";
 import { jobTypes, locationTypes } from "@/lib/job-types";
 import { CreateJobValues, createJobSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { X } from "lucide-react";
 import { draftToMarkdown } from "markdown-draft-js";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { createJobPosting } from "./actions";
+import { toast } from "react-toastify";
 
 export default function NewJobForm() {
   const form = useForm<CreateJobValues>({
@@ -38,20 +38,20 @@ export default function NewJobForm() {
     formState: { isSubmitting },
   } = form;
 
+  const router = useRouter();
+
+  const createJob = useCreateJob({
+    config: {
+      onSuccess: (res: any) => {
+        if (!res?.success) return;
+        toast.success("Successfully Submitted");
+        router.push("/admin");
+      },
+    },
+  });
+
   async function onSubmit(values: CreateJobValues) {
-    const formData = new FormData();
-
-    Object.entries(values).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value);
-      }
-    });
-
-    try {
-      await createJobPosting(formData);
-    } catch (error) {
-      alert("Something went wrong, please try again.");
-    }
+    createJob.mutate(values as any);
   }
 
   return (
@@ -90,18 +90,31 @@ export default function NewJobForm() {
             />
             <FormField
               control={control}
-              name="type"
+              name="position"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job type</FormLabel>
+                  <FormLabel>Position</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. Senior Developer" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="jobType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Type</FormLabel>
                   <FormControl>
                     <Select {...field} defaultValue="">
                       <option value="" hidden>
                         Select an option
                       </option>
-                      {jobTypes.map((jobType) => (
-                        <option key={jobType} value={jobType}>
-                          {jobType}
+                      {jobTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
                         </option>
                       ))}
                     </Select>
@@ -149,7 +162,7 @@ export default function NewJobForm() {
               name="locationType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Location</FormLabel>
+                  <FormLabel>Location Type</FormLabel>
                   <FormControl>
                     <Select
                       {...field}
@@ -164,9 +177,9 @@ export default function NewJobForm() {
                       <option value="" hidden>
                         Select an option
                       </option>
-                      {locationTypes.map((locationType) => (
-                        <option key={locationType} value={locationType}>
-                          {locationType}
+                      {locationTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
                         </option>
                       ))}
                     </Select>
@@ -182,73 +195,64 @@ export default function NewJobForm() {
                 <FormItem>
                   <FormLabel>Office location</FormLabel>
                   <FormControl>
-                    <LocationInput
-                      onLocationSelected={field.onChange}
-                      ref={field.ref}
-                    />
+                    <Input placeholder="e.g. Dhaka" {...field} />
                   </FormControl>
-                  {watch("location") && (
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setValue("location", "", { shouldValidate: true });
-                        }}
-                      >
-                        <X size={20} />
-                      </button>
-                      <span className="text-sm">{watch("location")}</span>
-                    </div>
-                  )}
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="space-y-2">
-              <Label htmlFor="applicationEmail">How to apply</Label>
-              <div className="flex justify-between">
-                <FormField
-                  control={control}
-                  name="applicationEmail"
-                  render={({ field }) => (
-                    <FormItem className="grow">
-                      <FormControl>
-                        <div className="flex items-center">
-                          <Input
-                            id="applicationEmail"
-                            placeholder="Email"
-                            type="email"
-                            {...field}
-                          />
-                          <span className="mx-2">or</span>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={control}
-                  name="applicationUrl"
-                  render={({ field }) => (
-                    <FormItem className="grow">
-                      <FormControl>
-                        <Input
-                          placeholder="Website"
-                          type="url"
-                          {...field}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            trigger("applicationEmail");
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
+            <FormField
+              control={control}
+              name="applicationDeadline"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Application Deadline</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="vacancies"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Vacancies</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Age</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="e.g. 25" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="experience"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Experience</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. 3+ years" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={control}
               name="description"
@@ -257,6 +261,24 @@ export default function NewJobForm() {
                   <Label onClick={() => setFocus("description")}>
                     Description
                   </Label>
+                  <FormControl>
+                    <RichTextEditor
+                      onChange={(draft) =>
+                        field.onChange(draftToMarkdown(draft))
+                      }
+                      ref={field.ref}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="requirements"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Requirements (Markdown)</FormLabel>
                   <FormControl>
                     <RichTextEditor
                       onChange={(draft) =>
