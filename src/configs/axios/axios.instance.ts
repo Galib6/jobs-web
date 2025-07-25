@@ -5,6 +5,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import { toast } from "react-toastify";
 
 export const AxiosInstance = axios.create({
   timeout: 15000,
@@ -28,13 +29,12 @@ AxiosInstance.interceptors.response.use(
       if (typeof window === "undefined") return error.response;
       return error.response;
     } else if (error.response?.data?.success === false) {
+      console.log(
+        "🚀😬 ~ error.response?.data?.success === false:",
+        error.response?.data?.success === false,
+      );
       error.response?.data?.errorMessages?.map((x: string) => {
-        return;
-
-        // notification.error({
-        //   message: x,
-        //   duration: 2,
-        // });
+        return toast.error(x);
       });
     }
     return error.response;

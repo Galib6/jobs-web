@@ -12,7 +12,7 @@ export default function Navbar() {
           <span className="text-xl font-bold tracking-tight">Job Portal</span>
         </Link>
         <Button asChild>
-          <Link href="/jobs/new">Post a job</Link>
+          <Link href="/jobs/new">Admin Login</Link>
         </Button>
       </nav>
     </header>

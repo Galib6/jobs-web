@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { PromiseValue } from "type-fest";
-import { $$ } from "../config/functions";
+import { $$ } from "../functions";
 
 export const queryClient = new QueryClient({
   defaultOptions: {

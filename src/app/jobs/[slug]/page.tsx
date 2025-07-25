@@ -2,6 +2,7 @@ import { IJob } from "@/@apis/jobs/interface";
 import { JobService } from "@/@apis/jobs/services";
 import JobPage from "@/components/JobPage";
 import { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -41,11 +42,12 @@ export default async function Page({ params: { slug } }: PageProps) {
     <main className="m-auto my-10 flex max-w-5xl flex-col items-center gap-5 px-3 md:flex-row md:items-start">
       <JobPage job={job} />
       <aside>
-        {/* <Button asChild>
-          <a href={applicationLink} className="w-40 md:w-fit">
-            Apply now
-          </a>
-        </Button> */}
+        <Link
+          href={`/jobs/${job.id}/apply`}
+          className="inline-block w-[60px] rounded bg-primary px-4 py-2 text-center font-semibold text-white hover:bg-primary/80 md:w-fit"
+        >
+          Apply
+        </Link>
       </aside>
     </main>
   );

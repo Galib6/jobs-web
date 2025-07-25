@@ -1,5 +1,7 @@
 "use client";
 
+import { useLogin } from "@/@apis/auth/hooks";
+import { setAuthSession } from "@/@apis/auth/utils";
 import LoadingButton from "@/components/LoadingButton";
 import {
   Form,
@@ -11,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -25,6 +28,7 @@ const signInSchema = z.object({
 type SignInValues = z.infer<typeof signInSchema>;
 
 export default function SignInForm() {
+  const router = useRouter();
   const form = useForm<SignInValues>({
     resolver: zodResolver(signInSchema),
   });
@@ -35,14 +39,18 @@ export default function SignInForm() {
     formState: { isSubmitting },
   } = form;
 
+  const loginFn = useLogin({
+    config: {
+      onSuccess(data) {
+        if (!data?.success) return;
+        setAuthSession(data?.data);
+        router.push("/admin");
+      },
+    },
+  });
+
   async function onSubmit(values: SignInValues) {
-    // Replace with your sign-in logic
-    try {
-      // await signInAction(values);
-      alert("Signed in!");
-    } catch (error) {
-      alert("Sign in failed.");
-    }
+    await loginFn.mutateAsync(values as any);
   }
 
   return (

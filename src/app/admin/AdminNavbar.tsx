@@ -1,12 +1,12 @@
 "use client";
-
-import { useClerk } from "@clerk/nextjs";
+import { useAuthSession } from "@/@apis/auth/utils";
+import { cookies } from "@/lib/cookies";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function AdminNavbar() {
-  const { user, signOut } = useClerk();
   const router = useRouter();
+  const user = useAuthSession();
 
   return (
     <div className="px-3">
@@ -15,12 +15,10 @@ export default function AdminNavbar() {
           Admin Dashboard
         </Link>
         <div className="space-x-2">
-          <span className="font-semibold">
-            {user?.primaryEmailAddress?.emailAddress}
-          </span>
+          <span className="font-semibold">{user?.user?.name}</span>
           <button
             onClick={async () => {
-              await signOut();
+              cookies.clear();
               router.push("/");
             }}
             className="underline"

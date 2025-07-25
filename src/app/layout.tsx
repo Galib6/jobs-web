@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <Navbar />
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <Footer />
+        <ToastContainer />
       </body>
     </html>
   );
