@@ -1,6 +1,5 @@
 "use client";
-import { cookies } from "@/lib/cookies";
-import { useAuthSession } from "@/modules/auth/utils";
+import { clearAuthSession, useAuthSession } from "@/modules/auth/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -18,7 +17,7 @@ export default function AdminNavbar() {
           <span className="font-semibold">{user?.user?.name}</span>
           <button
             onClick={async () => {
-              cookies.clear();
+              clearAuthSession();
               router.push("/");
             }}
             className="underline"

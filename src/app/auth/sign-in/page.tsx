@@ -46,7 +46,7 @@ export default function SignInForm() {
         if (!data?.success) return;
         setAuthSession(data?.data);
         toast.success("Login Success");
-        Promise.resolve().then(() => router.push("/admin"));
+        window.location.href = "/admin";
       },
     },
   });
