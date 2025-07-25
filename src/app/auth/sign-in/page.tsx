@@ -61,6 +61,13 @@ export default function SignInForm() {
         <h1 className="text-2xl font-bold">Sign In</h1>
         <p className="text-muted-foreground">Access your account</p>
       </div>
+            <div className="flex flex-col items-center gap-2 rounded-lg bg-gray-100 p-4 text-sm text-gray-700 shadow-md">
+        <span className="font-semibold text-gray-800">Demo Login Credentials</span>
+        <div className="flex flex-col gap-1">
+          <span><span className="font-medium">Email:</span> superadmin@jobportal.com</span>
+          <span><span className="font-medium">Password:</span> 123456</span>
+        </div>
+      </div>
       <Form {...form}>
         <form
           className="space-y-4"
