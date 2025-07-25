@@ -18,7 +18,7 @@ export default function AdminNavbar() {
           <button
             onClick={async () => {
               clearAuthSession();
-              router.push("/");
+              window.location.href = "/admin";
             }}
             className="underline"
           >
