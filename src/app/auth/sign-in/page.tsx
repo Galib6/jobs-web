@@ -15,6 +15,7 @@ import { setAuthSession } from "@/modules/auth/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 // Zod schema for sign-in
@@ -44,7 +45,8 @@ export default function SignInForm() {
       onSuccess(data) {
         if (!data?.success) return;
         setAuthSession(data?.data);
-        router.push("/admin");
+        toast.success("Login Success");
+        Promise.resolve().then(() => router.push("/admin"));
       },
     },
   });

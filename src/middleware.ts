@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     }
     const tokenValue = String(token?.value);
     try {
-      const res = await fetch(`${ENV.apiUrl}/health`, {
+      const res = await fetch(`${ENV.apiUrl}/authorize`, {
         headers: {
           Authorization: `Bearer ${tokenValue}`,
         },
