@@ -1,5 +1,5 @@
-import { IJob } from "@/@apis/jobs/interface";
 import { formatMoney } from "@/lib/utils";
+import { IJob } from "@/modules/jobs/interface";
 import { Banknote, Briefcase, Globe2, MapPin } from "lucide-react";
 import Markdown from "./Markdown";
 

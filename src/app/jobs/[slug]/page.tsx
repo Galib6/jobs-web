@@ -1,6 +1,6 @@
-import { IJob } from "@/@apis/jobs/interface";
-import { JobService } from "@/@apis/jobs/services";
 import JobPage from "@/components/JobPage";
+import { IJob } from "@/modules/jobs/interface";
+import { JobService } from "@/modules/jobs/services";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";

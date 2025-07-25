@@ -1,6 +1,6 @@
-import { IJob } from "@/@apis/jobs/interface";
 import { cn } from "@/lib/utils";
 import { JobFilterValues } from "@/lib/validation";
+import { IJob } from "@/modules/jobs/interface";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import JobListItem from "./JobListItem";

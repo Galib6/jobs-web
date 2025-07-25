@@ -1,6 +1,6 @@
-import { IJob } from "@/@apis/jobs/interface";
 import companyLogoPlaceholder from "@/assets/company-logo-placeholder.png";
 import { formatMoney, relativeDate } from "@/lib/utils";
+import { IJob } from "@/modules/jobs/interface";
 import { Banknote, Briefcase, Clock, Globe2, MapPin } from "lucide-react";
 import Image from "next/image";
 import Badge from "./Badge";

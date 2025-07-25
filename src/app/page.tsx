@@ -1,8 +1,8 @@
-import { JobService } from "@/@apis/jobs/services";
 import JobFilterSidebar from "@/components/JobFilterSidebar";
 import JobResults from "@/components/JobResults";
 import H1 from "@/components/ui/h1";
 import { JobFilterValues } from "@/lib/validation";
+import { JobService } from "@/modules/jobs/services";
 import { Metadata } from "next";
 
 interface PageProps {

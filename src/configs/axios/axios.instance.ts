@@ -1,7 +1,7 @@
-import { authTokenKey } from "@/@apis/auth/constants";
 import { IBaseResponse } from "@/base/interfaces";
 import { ENV } from "@/environments";
 import { cookies } from "@/lib/cookies";
+import { authTokenKey } from "@/modules/auth/constants";
 import axios, {
   AxiosError,
   AxiosResponse,

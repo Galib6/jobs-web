@@ -1,6 +1,6 @@
 "use client";
-import { useAuthSession } from "@/@apis/auth/utils";
 import { cookies } from "@/lib/cookies";
+import { useAuthSession } from "@/modules/auth/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

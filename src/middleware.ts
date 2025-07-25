@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { authTokenKey } from "./@apis/auth/constants";
 import { ENV } from "./environments";
+import { authTokenKey } from "./modules/auth/constants";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

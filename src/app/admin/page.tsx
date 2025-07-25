@@ -1,4 +1,4 @@
-import { JobService } from "@/@apis/jobs/services";
+import { JobService } from "@/modules/jobs/services";
 import Link from "next/link";
 
 export default async function AdminPage({

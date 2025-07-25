@@ -7,7 +7,7 @@ import { EditorProps } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const Editor = dynamic(
-  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor as any),
   { ssr: false },
 );
 
@@ -15,6 +15,7 @@ export default forwardRef<Object, EditorProps>(
   function RichTextEditor(props, ref) {
     return (
       <Editor
+        {...(props as any)}
         editorClassName={cn(
           "border rounded-md px-3 min-h-[150px] cursor-text ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
           props.editorClassName,
@@ -25,14 +26,13 @@ export default forwardRef<Object, EditorProps>(
             options: ["bold", "italic", "underline"],
           },
         }}
-        editorRef={(r) => {
+        editorRef={(r: any) => {
           if (typeof ref === "function") {
             ref(r);
           } else if (ref) {
-            ref.current = r;
+            (ref as any).current = r;
           }
         }}
-        {...props}
       />
     );
   },

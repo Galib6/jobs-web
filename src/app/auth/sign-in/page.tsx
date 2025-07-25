@@ -1,7 +1,5 @@
 "use client";
 
-import { useLogin } from "@/@apis/auth/hooks";
-import { setAuthSession } from "@/@apis/auth/utils";
 import LoadingButton from "@/components/LoadingButton";
 import {
   Form,
@@ -12,6 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useLogin } from "@/modules/auth/hooks";
+import { setAuthSession } from "@/modules/auth/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";

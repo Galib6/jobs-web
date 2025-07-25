@@ -1,6 +1,5 @@
 "use client";
 
-import { useCreateJob } from "@/@apis/jobs/hooks";
 import LoadingButton from "@/components/LoadingButton";
 import RichTextEditor from "@/components/RichTextEditor";
 import {
@@ -17,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import Select from "@/components/ui/select";
 import { jobTypes, locationTypes } from "@/lib/job-types";
 import { CreateJobValues, createJobSchema } from "@/lib/validation";
+import { useCreateJob } from "@/modules/jobs/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { draftToMarkdown } from "markdown-draft-js";
 import { useRouter } from "next/navigation";

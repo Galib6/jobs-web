@@ -1,7 +1,5 @@
 "use client";
 
-import { useCreateApplication } from "@/@apis/applications/hooks";
-import { IApplicationCreate } from "@/@apis/applications/interface";
 import LoadingButton from "@/components/LoadingButton";
 import {
   Form,
@@ -12,6 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useCreateApplication } from "@/modules/applications/hooks";
+import { IApplicationCreate } from "@/modules/applications/interface";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
